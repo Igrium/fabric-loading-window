@@ -3,6 +3,7 @@ package com.igrium.loading_window;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -11,7 +12,10 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.UIManager;
 
-import com.mojang.logging.LogUtils;
+import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.core.appender.AbstractAppender;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 
@@ -19,14 +23,21 @@ public class PreLaunch implements PreLaunchEntrypoint {
 
     public static Optional<JFrame> frame = Optional.empty();
 
+    public static Logger LOGGER = LoggerFactory.getLogger("loading-window");
+
     @Override
     public void onPreLaunch() {
+        if (isMac()) {
+            LOGGER.warn("Cannot open loading window on Mac due to OS limitations regarding AWT.");
+            return;
+        }
         try {
             createAndShowUI();
         } catch (Exception e) {
-            LogUtils.getLogger().error("Unable to launch loading screen.");
+            LOGGER.error("Unable to launch loading screen.", e.getMessage());
             return;
         }
+
     }
 
     private void createAndShowUI() throws Exception {
@@ -51,4 +62,26 @@ public class PreLaunch implements PreLaunchEntrypoint {
         frame = Optional.of(loadingFrame);
     }
     
+    private static boolean isMac() {
+        String os = System.getProperty("os.name").toLowerCase();
+        return os.indexOf("mac") >= 0;
+    }
+
+    public static class UIAppender extends AbstractAppender {
+
+        private final Consumer<String> consumer;
+
+        @SuppressWarnings("deprecation")        
+        protected UIAppender(String name, Consumer<String> consumer) {
+            super(name, null, null);
+            this.consumer = consumer;
+        }
+        
+
+        @Override
+        public void append(LogEvent event) {
+            consumer.accept(event.getMessage().getFormattedMessage());
+        }
+        
+    }
 }
