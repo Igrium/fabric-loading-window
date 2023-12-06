@@ -2,6 +2,8 @@ package com.igrium.loading_window;
 
 import net.fabricmc.api.ModInitializer;
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ public class Initializer implements ModInitializer {
             PreLaunch.frame.ifPresent(frame -> {
                 frame.setVisible(false);
                 frame.dispose();
+                PreLaunch.frame = Optional.empty();
             });
         });
     }

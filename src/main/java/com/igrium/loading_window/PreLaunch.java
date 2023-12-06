@@ -44,6 +44,8 @@ public class PreLaunch implements PreLaunchEntrypoint {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
         JFrame loadingFrame = new JFrame("Minecraft");
+        loadingFrame.setResizable(false);
+
         JProgressBar progressBar = new JProgressBar();
         progressBar.setIndeterminate(true);
         progressBar.setPreferredSize(new Dimension(256, (int) progressBar.getPreferredSize().getHeight()));
@@ -52,7 +54,7 @@ public class PreLaunch implements PreLaunchEntrypoint {
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         mainPanel.setLayout(new BorderLayout());
 
-        mainPanel.add(new JLabel("Initializing Fabric..."), BorderLayout.NORTH);
+        mainPanel.add(new JLabel("Initializing Minecraft..."), BorderLayout.NORTH);
         mainPanel.add(progressBar, BorderLayout.CENTER);
 
         loadingFrame.setContentPane(mainPanel);

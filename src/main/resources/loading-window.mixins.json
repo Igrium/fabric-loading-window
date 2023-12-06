@@ -3,7 +3,7 @@
 	"package": "com.igrium.loading_window.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"WindowMixin"
+		"GLFWMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
