@@ -8,8 +8,8 @@
 		"Igrium"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://github.com/Igrium/fabric-loading-window",
+		"sources": "https://github.com/Igrium/fabric-loading-window"
 	},
 	"license": "MIT",
 	"icon": "assets/loading-window/icon.png",
