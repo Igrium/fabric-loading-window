@@ -7,8 +7,6 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.igrium.loading_window.event.WindowOpeningCallback;
-
 public class Initializer implements ModInitializer {
     // This logger is used to write text to the console and the log file.
     // It is considered best practice to use your mod id as the logger's name.
@@ -17,7 +15,7 @@ public class Initializer implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        WindowOpeningCallback.EVENT.register(() -> {
+        WindowOpenListener.getListeners().add(() -> {
             PreLaunch.frame.ifPresent(frame -> {
                 frame.setVisible(false);
                 frame.dispose();

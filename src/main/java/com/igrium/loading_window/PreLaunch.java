@@ -34,7 +34,7 @@ public class PreLaunch implements PreLaunchEntrypoint {
         try {
             createAndShowUI();
         } catch (Exception e) {
-            LOGGER.error("Unable to launch loading screen.", e.getMessage());
+            LOGGER.error("Unable to show loading screen.", e.getMessage());
             return;
         }
 
